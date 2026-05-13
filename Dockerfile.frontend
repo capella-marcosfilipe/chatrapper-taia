@@ -1,0 +1,17 @@
+FROM node:20-alpine
+
+WORKDIR /app
+
+# Copiar package.json e instalar dependências
+COPY frontend/package.json frontend/package-lock.json ./
+RUN npm ci
+
+# Copiar código do frontend
+COPY frontend/ .
+
+# Construir a aplicação para produção
+RUN npm run build
+
+EXPOSE 3000
+
+CMD ["npm", "start"]
